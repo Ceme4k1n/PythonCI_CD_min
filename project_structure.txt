@@ -1,0 +1,22 @@
+cicd_bot/
+├── config/
+│   └── config.py
+├── core/
+│   ├── __init__.py
+│   ├── project_manager.py
+│   ├── git_monitor.py
+│   ├── deployer.py
+│   └── docker_monitor.py
+├── database/
+│   ├── __init__.py
+│   └── db_manager.py
+├── bot/
+│   ├── __init__.py
+│   ├── handlers.py
+│   └── keyboard.py
+├── utils/
+│   ├── __init__.py
+│   └── error_handler.py
+├── main.py
+├── requirements.txt
+└── Dockerfile 
