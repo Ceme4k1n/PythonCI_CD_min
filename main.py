@@ -50,7 +50,14 @@ async def init_components(config: Config):
         db_manager = DatabaseManager(config.database_path)
         project_manager = ProjectManager(db_manager, config.projects_base_dir)
         git_monitor = GitMonitor(db_manager)
-        docker_monitor = DockerMonitor()
+        
+        # Инициализируем Docker monitor только если он не отключен
+        docker_monitor = None
+        if not os.getenv('DISABLE_DOCKER_MONITOR', '').lower() in ['true', '1', 'yes']:
+            docker_monitor = DockerMonitor()
+        else:
+            logging.info("Docker monitoring is disabled")
+            
         error_handler = ErrorHandler(bot)
 
         return bot, db_manager, project_manager, git_monitor, docker_monitor, error_handler

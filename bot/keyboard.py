@@ -22,6 +22,8 @@ class Keyboard:
             InlineKeyboardButton("🔄 Обновить", callback_data=f"update_{project_id}"),
             InlineKeyboardButton("⏹ Остановить", callback_data=f"stop_{project_id}"),
             InlineKeyboardButton("▶️ Запустить", callback_data=f"start_{project_id}"),
+            InlineKeyboardButton("🧪 Тесты", callback_data=f"test_{project_id}"),
+            InlineKeyboardButton("📋 Версии", callback_data=f"versions_{project_id}"),
             InlineKeyboardButton("🔙 Назад", callback_data="back_to_main")
         )
         return keyboard
@@ -57,4 +59,25 @@ class Keyboard:
                 callback_data=f"project_{project.id}"
             ))
         keyboard.row(InlineKeyboardButton("◀️ Назад", callback_data="main_menu"))
+        return keyboard
+
+    @staticmethod
+    def versions_menu(project_id: int) -> InlineKeyboardMarkup:
+        """Меню управления версиями"""
+        keyboard = InlineKeyboardMarkup(row_width=2)
+        keyboard.add(
+            InlineKeyboardButton("🔄 Обновить список", callback_data=f"versions_{project_id}"),
+            InlineKeyboardButton("🔙 Назад", callback_data="back_to_main")
+        )
+        return keyboard
+
+    def rollback_menu(self, project_id: int, versions: list) -> InlineKeyboardMarkup:
+        """Меню выбора версии для отката"""
+        keyboard = InlineKeyboardMarkup(row_width=2)
+        for version in versions:
+            keyboard.add(InlineKeyboardButton(
+                f"Версия {version.version_number}",
+                callback_data=f"rollback_{project_id}_{version.version_number}"
+            ))
+        keyboard.add(InlineKeyboardButton("🔙 Назад", callback_data=f"versions_{project_id}"))
         return keyboard 

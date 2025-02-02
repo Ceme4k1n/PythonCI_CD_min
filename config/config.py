@@ -22,6 +22,10 @@ class Config:
     http_proxy: Optional[str]
     https_proxy: Optional[str]
 
+    def get(self, key: str, default=None):
+        """Получение значения конфигурации по ключу"""
+        return getattr(self, key.lower(), default)
+
     @classmethod
     def from_env(cls) -> 'Config':
         try:
